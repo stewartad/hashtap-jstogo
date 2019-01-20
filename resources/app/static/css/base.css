@@ -10,17 +10,17 @@
     width: 100%;
 } */
 
-#tap-button {
-    width: 200px;
-    height: 100px;
-    background: #333;
+.panel {
+  flex: 0 1 auto;
+  font-family: 'Staatliches';
 }
 
+/*
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
   @import url('https://fonts.googleapis.com/css?family=Staatliches');
   @import url('https://fonts.googleapis.com/css?family=Permanent+Marker');
   @import url('https://fonts.googleapis.com/css?family=Architects+Daughter');
-
+*/
   * {
     box-sizing: border-box;
     margin: 0;
@@ -34,7 +34,7 @@
     display: inline-baseline;
     margin-bottom: 3rem;
     position: relative;
-    left: -22rem;
+    left: -15rem;
     font-family: 'Staatliches', cursive;
     border: solid 6px black;
     border-radius: 15rem;
@@ -62,6 +62,7 @@
   .btn {
   font-family: 'Architects Daughter', cursive;
   font-size: 20px;
+
   }
 
   #wrapper {
@@ -82,11 +83,7 @@
     justify-content: space-between;
   }
 
-  #logo {
-    height: auto;
-    margin-bottom: 20px;
-    width: 420px;
-  }
+
 
   main {
     display: flex;
@@ -169,10 +166,7 @@
 
 
 
-  .doc p {
-    color: black;
-    margin-bottom: 10px;
-  }
+
 
   .doc button {
     flex: 0 1 auto;
