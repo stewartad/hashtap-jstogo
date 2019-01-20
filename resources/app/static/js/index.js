@@ -37,6 +37,7 @@ let index = {
         astilectron.sendMessage(message, function(message) {
             asticode.loader.hide();
             document.getElementById("cost").innerHTML = `<h1>Cost: ` + `   ` + message.payload.cost + `</h1><br /><h1>Time: ` + time + `</h1><br /><h1>USD: ` + message.payload.usd + `</h1>`;
+            document.getElementById("bal").innerHTML = `<h1>Customer Balance: ` + `   ` + message.payload.cbal + `</h1><br /><h1>Business Balance: ` + message.payload.bbal + `</h1>`;
         })
         index.explore();
         
@@ -55,7 +56,7 @@ let index = {
             
 
             // Explore default path
-            index.explore();
+            index.explore(0);
         })
         document.getElementById("tap-button").addEventListener('mousedown', function() {
             index.holdTap();

@@ -2,11 +2,12 @@ package main
 
 import (
 	"encoding/json"
+	"time"
 
 	"github.com/asticode/go-astichartjs"
 	"github.com/asticode/go-astilectron"
 	"github.com/asticode/go-astilectron-bootstrap"
-	//"github.com/hashgraph/hedera-sdk-go"
+	"github.com/hashgraph/hedera-sdk-go"
 )
 
 
@@ -36,22 +37,22 @@ func handleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 
 
 	// case "onload":
-	// 	if payload, err = getBalance(); err != nil {
+	// 	if payload, err = explore(); err != nil {
 	// 		payload = err.Error()
 	// 		return
 	// 	}
 	case "tap":
 		// Unmarshall
 		//var time int64
-		var time int64
+		var timeD int64
 		if len(m.Payload) > 0 {
-			if err = json.Unmarshal(m.Payload, &time); err != nil {
+			if err = json.Unmarshal(m.Payload, &timeD); err != nil {
 				payload = err.Error()
 				return
 			}
 		}
 
-		if payload, err = explore(time); err != nil {
+		if payload, err = explore(timeD); err != nil {
 			payload = err.Error()
 			return
 		}
@@ -82,6 +83,8 @@ type Transaction struct {
 type Exploration struct {
 	Cost		float64				`json:"cost"`
 	Usd			float64				`json:"usd"`
+	C_Balance	float64			`json:"cbal"`
+	B_Balance	float64				`json:"bbal"`
 	Dirs       []Dir              `json:"dirs"`
 	Files      *astichartjs.Chart `json:"files,omitempty"`
 	FilesCount int                `json:"files_count"`
@@ -91,7 +94,7 @@ type Exploration struct {
 
 // Balance does stuff
 type Balance struct {
-	C_Balance		float64				`json:"cbal"`
+	C_Balance	float64			`json:"cbal"`
 	B_Balance	float64				`json:"bbal"`
 }
 
@@ -117,7 +120,7 @@ type Dir struct {
 
 // explore explores a path.
 // If path is empty, it explores the user's home directory
-func explore(time int64) (e Exploration, err error) {
+func explore(timeD int64) (e Exploration, err error) {
 
 	//init drink2
 	var soda = Drink{
@@ -125,14 +128,25 @@ func explore(time int64) (e Exploration, err error) {
 		price: 600000000,
 		flow: 1,
 	}
+	
+	
 
 
-	cost := (float64(time) / 1000) * soda.price
+	cost := (float64(timeD) / 1000) * soda.price
+
+	transferAmount(hedera.AccountID{Account: 1001}, hedera.AccountID{Account: 1002}, int64(cost))
+
+	time.Sleep(2*time.Second)
+
+	customerBal := getAccountBal(hedera.AccountID{Account: 1001})
+	bizBal := getAccountBal(hedera.AccountID{Account: 1002})
 	usd := cost * 0.1 / 1000000000
 	// Init exploration
 	e = Exploration{
 		Cost: cost,
 		Usd: usd,
+		C_Balance: customerBal,
+		B_Balance: bizBal,
 		//Dirs: []Dir{},
 		//Path: path,
 	}
@@ -140,15 +154,12 @@ func explore(time int64) (e Exploration, err error) {
 	return
 }
 
-// func getBalance() (b Balance, err error) {
+// func getBalance() (b Exploration, err error) {
 // 	//Customer
-// 	customerBal := getAccountBal(hedera.AccountID{Account: 1001})
-// 	bizBal := getAccountBal(hedera.AccountID{Account: 1002})
 	
 // 	// Init exploration
-// 	b = Balance{
-// 		C_Balance: customerBal,
-// 		B_Balance: bizBal,
+// 	b = Exploration{
+		
 // 		//Dirs: []Dir{},
 // 		//Path: path,
 // 	}
