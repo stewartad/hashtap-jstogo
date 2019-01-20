@@ -20,17 +20,23 @@ let index = {
         div.innerHTML = `<i class="fa fa-folder"></i><span>` + name + `</span>`;
         document.getElementById("dirs").appendChild(div)
     },
-    holdTap() {
+    getBal: function() {
+        let message = {"name": "onload"};
+        astilectron.sendMessage(message, function(message) {
+            document.getElementById("bal").innerHTML = `<h1>Customer Balance: ` + `   ` + message.payload.cbal + `</h1><br /><h1>Business Balance: ` + message.payload.bbal + `</h1>`;
+        })
+    },
+    holdTap: function() {
         start = new Date();
     },
-    releaseTap() {
+    releaseTap: function() {
         end = new Date();
         let time = end - start;
         let message = {"name": "tap", "payload": time};
         asticode.loader.show();
         astilectron.sendMessage(message, function(message) {
             asticode.loader.hide();
-            document.getElementById("cost").innerHTML = `<h1>Cost: ` + `   ` + message.payload.cost + `</h1><br /><h1>Time: ` + time + `</h1><br /><h1>USD: ` + message.payload.usd + `</h1>`
+            document.getElementById("cost").innerHTML = `<h1>Cost: ` + `   ` + message.payload.cost + `</h1><br /><h1>Time: ` + time + `</h1><br /><h1>USD: ` + message.payload.usd + `</h1>`;
         })
         index.explore();
         
@@ -45,6 +51,8 @@ let index = {
         document.addEventListener('astilectron-ready', function() {
             // Listen
             index.listen();
+
+            
 
             // Explore default path
             index.explore();

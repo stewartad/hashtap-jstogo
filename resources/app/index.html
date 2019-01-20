@@ -2,26 +2,69 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="static/css/base.css"/>
+    
     <link rel="stylesheet" href="static/lib/astiloader/astiloader.css">
     <link rel="stylesheet" href="static/lib/astimodaler/astimodaler.css">
     <link rel="stylesheet" href="static/lib/astinotifier/astinotifier.css">
     <link rel="stylesheet" href="static/lib/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/css/base.css"/>
 </head>
 <body>
-    <div class="left" id="dirs"></div>
+    <!-- <div class="left" id="dirs"></div>
     <div class="right">
         <!-- <div class="title"><span id="path"></span></div>
         <div class="panel"><span class="stat" id="files_count"></span> file(s)</div>
         <div class="panel"><span class="stat" id="files_size"></span> of file(s)</div> -->
-        <div class="panel"><span class = "stat" id="cost"><h1>Cost: </h1><br /><h1>Time: </h1><br /><h1>USD: </h1></span></div>
-        <button type="button" id="tap-button">Dispense</div>
+        
+        <!-- <button type="button" id="tap-button">Dispense</div> -->
         
         <!-- <div class="panel" id="files_panel">
             <div class="chart_title">Files repartition</div>
             <div id="files"></div>
-        </div> -->
-    </div>
+        </div>
+    </div> -->
+
+    <div  id="wrapper">
+        <div class="row clearfix">
+    
+        <h1 class="logoName text text-light ml-4"> Hashtap </h1>
+    
+    
+        <div class= "menu-frame-out ml-4">
+            <div class="menu-frame-inner">
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn text text-white active">
+                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Bubby Cola
+                    100 h</label>
+                    <label class="btn  text text-white ">
+                    <input type="radio" name="options" id="option2" autocomplete="off"> Dr. Bob 104 h
+                    </label>
+                    <label class="btn  text text-white ">
+                    <input type="radio" name="options" id="option3" autocomplete="off"> Big Red 108 h
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+            <main>
+        
+            <div class="right-side">
+                <div class="doc">
+                <div class = "cup" id="animation1">
+        
+                </div>
+                <button class="button" id="tap-button">Tap to Taste</button><br><br>
+                </div>
+        
+                <div class="panel"><span class = "stat" id="cost"><h1>Cost: </h1><br /><h1>Time: </h1><br /><h1>USD: </h1></span></div>
+                <div class="panel"><span class = "stat" id="bal"><h1>Customer Balance: </h1><br /><h1>Business Balance: </h1></span></div>
+          </div>
+        </main>
+      </div>
+
+
     <script src="static/js/index.js"></script>
     <script src="static/lib/astiloader/astiloader.js"></script>
     <script src="static/lib/astimodaler/astimodaler.js"></script>
@@ -30,5 +73,8 @@
     <script type="text/javascript">
         index.init();
     </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 </body>
 </html>

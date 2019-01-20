@@ -2,17 +2,15 @@ package main
 
 import (
 	"encoding/json"
-	// "io/ioutil"
-	// "os"
-	// "os/user"
-	// "path/filepath"
-	// "sort"
-	//"strconv"
 
 	"github.com/asticode/go-astichartjs"
 	"github.com/asticode/go-astilectron"
 	"github.com/asticode/go-astilectron-bootstrap"
+	//"github.com/hashgraph/hedera-sdk-go"
 )
+
+
+
 
 // handleMessages handles messages
 func handleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload interface{}, err error) {
@@ -30,6 +28,15 @@ func handleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 
 	// 	// Explore
 	// 	if payload, err = explore(path); err != nil {
+	// 		payload = err.Error()
+	// 		return
+	// 	}
+
+
+
+
+	// case "onload":
+	// 	if payload, err = getBalance(); err != nil {
 	// 		payload = err.Error()
 	// 		return
 	// 	}
@@ -82,25 +89,31 @@ type Exploration struct {
 	Path       string             `json:"path"`
 }
 
+// Balance does stuff
+type Balance struct {
+	C_Balance		float64				`json:"cbal"`
+	B_Balance	float64				`json:"bbal"`
+}
+
 // PayloadDir represents a dir payload
 type Dir struct {
 	Name string `json:"name"`
 	Path string `json:"path"`
 }
 
-func calCost(time int64) (c Cost) {
-	// init drink1
-	var MtnDew = Drink{
-		name: "Mtn Dew",
-		price: 0.04,
-		flow: 0.1,
-	}
+// func calCost(time int64) (c Cost) {
+// 	// init drink1
+// 	var MtnDew = Drink{
+// 		name: "Mtn Dew",
+// 		price: 0.04,
+// 		flow: 0.1,
+// 	}
 
-	c = Cost{
-		cost: (float64(time) / 1000.0) * MtnDew.price,
-	}
-	return
-}
+// 	c = Cost{
+// 		cost: (float64(time) / 1000.0) * MtnDew.price,
+// 	}
+// 	return
+// }
 
 // explore explores a path.
 // If path is empty, it explores the user's home directory
@@ -124,9 +137,21 @@ func explore(time int64) (e Exploration, err error) {
 		//Path: path,
 	}
 
-
-
-
-
 	return
 }
+
+// func getBalance() (b Balance, err error) {
+// 	//Customer
+// 	customerBal := getAccountBal(hedera.AccountID{Account: 1001})
+// 	bizBal := getAccountBal(hedera.AccountID{Account: 1002})
+	
+// 	// Init exploration
+// 	b = Balance{
+// 		C_Balance: customerBal,
+// 		B_Balance: bizBal,
+// 		//Dirs: []Dir{},
+// 		//Path: path,
+// 	}
+
+// 	return
+// }
