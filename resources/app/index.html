@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    
+
     <link rel="stylesheet" href="static/lib/astiloader/astiloader.css">
     <link rel="stylesheet" href="static/lib/astimodaler/astimodaler.css">
     <link rel="stylesheet" href="static/lib/astinotifier/astinotifier.css">
     <link rel="stylesheet" href="static/lib/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Architects+Daughter|Staatliches" rel="stylesheet">
     <link rel="stylesheet" href="static/css/base.css"/>
 </head>
 <body>
@@ -16,9 +17,9 @@
         <!-- <div class="title"><span id="path"></span></div>
         <div class="panel"><span class="stat" id="files_count"></span> file(s)</div>
         <div class="panel"><span class="stat" id="files_size"></span> of file(s)</div> -->
-        
+
         <!-- <button type="button" id="tap-button">Dispense</div> -->
-        
+
         <!-- <div class="panel" id="files_panel">
             <div class="chart_title">Files repartition</div>
             <div id="files"></div>
@@ -26,11 +27,16 @@
     </div> -->
 
     <div  id="wrapper">
-        <div class="row clearfix">
-    
+
+
+
         <h1 class="logoName text text-light ml-4"> Hashtap </h1>
-    
-    
+
+
+
+
+
+<!--
         <div class= "menu-frame-out ml-4">
             <div class="menu-frame-inner">
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -45,22 +51,35 @@
                     </label>
                 </div>
             </div>
-        </div>
-        
-        </div>
+        </div> -->
+
+
             <main>
-        
+
             <div class="right-side">
                 <div class="doc">
                 <div class = "cup" id="animation1">
-        
+
                 </div>
                 <button class="button" id="tap-button">Tap to Taste</button><br><br>
                 </div>
-        
-                <div class="panel"><span class = "stat" id="cost"><h1>Cost: </h1><br /><h1>Time: </h1><br /><h1>USD: </h1></span></div>
-                <div class="panel"><span class = "stat" id="bal"><h1>Customer Balance: </h1><br /><h1>Business Balance: </h1></span></div>
-          </div>
+
+
+                <div class="panel"><span class = "stat" >
+                  <div class = "card"><div class = "card-body" id="cost"> <h1>Cost: </h1> </div></div>
+
+                  <div class = "card"><div class = "card-body" id="time">   <h1>Time: </h1> </div></div>
+
+                    <div class = "card"><div class = "card-body" id = "usd"> <h1>USD: </h1></div></div>
+                </span>
+              </div>
+
+                <div class="panel"><span class = "stat">
+                  <div class = "card"><div class = "card-body" id="cBal">   <h1>Customer Balance: </h1> </div></div>
+
+                    <div class = "card"><div class = "card-body" id="bBal"> <h1>Business Balance: </h1></div></div>
+                </span></div>
+              </div>
         </main>
       </div>
 
