@@ -125,7 +125,7 @@ func explore(timeD int64) (e Exploration, err error) {
 	//init drink2
 	var soda = Drink{
 		name: "MtnDew",
-		price: 600000000,
+		price: 60000000,
 		flow: 1,
 	}
 	
@@ -140,7 +140,7 @@ func explore(timeD int64) (e Exploration, err error) {
 
 	customerBal := getAccountBal(hedera.AccountID{Account: 1001})
 	bizBal := getAccountBal(hedera.AccountID{Account: 1002})
-	usd := cost * 0.1 / 1000000000
+	usd := cost * 0.1 / 100000000
 	// Init exploration
 	e = Exploration{
 		Cost: cost,
