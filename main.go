@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"time"
 
 	"encoding/json"
 
@@ -84,10 +83,10 @@ func main() {
 			w = ws[0]
 			price = 100
 			go func() {
-				time.Sleep(5 * time.Second)
-				if err := bootstrap.SendMessage(w, "check.out.menu", "Don't forget to check out the menu!"); err != nil {
-					astilog.Error(errors.Wrap(err, "sending check.out.menu event failed"))
-				}
+				//time.Sleep(5 * time.Second)
+				// if err := bootstrap.SendMessage(w, "check.out.menu", "Don't forget to check out the menu!"); err != nil {
+				// 	astilog.Error(errors.Wrap(err, "sending check.out.menu event failed"))
+				// }
 			}()
 			return nil
 		},

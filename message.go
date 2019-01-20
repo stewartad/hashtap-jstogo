@@ -150,7 +150,9 @@ func explore(timeD int64) (e Exploration, err error) {
 		//Dirs: []Dir{},
 		//Path: path,
 	}
-
+	if err := bootstrap.SendMessage(w, "check.out.menu", "Transaction Success"); err != nil {
+		
+	}
 	return
 }
 

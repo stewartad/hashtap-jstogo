@@ -36,8 +36,11 @@ let index = {
         asticode.loader.show();
         astilectron.sendMessage(message, function(message) {
             asticode.loader.hide();
-            document.getElementById("cost").innerHTML = `<h1>Cost: ` + `   ` + message.payload.cost + `</h1><br /><h1>Time: ` + time + `</h1><br /><h1>USD: ` + message.payload.usd + `</h1>`;
-            document.getElementById("bal").innerHTML = `<h1>Customer Balance: ` + `   ` + message.payload.cbal + `</h1><br /><h1>Business Balance: ` + message.payload.bbal + `</h1>`;
+            document.getElementById("cost").innerHTML = `<h1>Cost: ` + `   ` + message.payload.cost + ` Tinybars</h1>`;
+            document.getElementById("time").innerHTML   = `<h1>Time: ` + time + ` ms</h1>`;
+            document.getElementById("usd").innerHTML = `<h1>USD: $` + message.payload.usd + `</h1>`;
+            document.getElementById("cBal").innerHTML   `<h1>Customer Balance: ` + `   ` + message.payload.cbal + ` Hbar</h1>`;
+            document.getElementById("bBal").innerHTML = `<h1>Business Balance: ` + message.payload.bbal + ` Hbar</h1>`;
         })
         index.explore();
         
