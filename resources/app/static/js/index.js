@@ -26,13 +26,13 @@ let index = {
     releaseTap() {
         end = new Date();
         let time = end - start;
-        let message = {"name": "tapRelease", "payload": time};
+        let message = {"name": "tap", "payload": time};
         asticode.loader.show();
         astilectron.sendMessage(message, function(message) {
             asticode.loader.hide();
-            document.getElementById("cost").innerHTML = `<h1>Cost: ` + `   ` + message.payload.cost + `</h1>
-            <h1>Time: ` + time + `</h1>`
+            document.getElementById("cost").innerHTML = `<h1>Cost: ` + `   ` + message.payload.cost + `</h1><br /><h1>Time: ` + time + `</h1><br /><h1>USD: ` + message.payload.usd + `</h1>`
         })
+        index.explore();
         
     },
     init: function() {
@@ -87,6 +87,7 @@ let index = {
             // Process files
             document.getElementById("files_count").innerHTML = message.payload.files_count;
             //document.getElementById("files_size").innerHTML = message.payload.files_size;
+            document.getElementById("cost").innerHTML = `<h1>WTF</h1>` + message.payload;
             document.getElementById("files").innerHTML = ""; 
             if (typeof message.payload.files !== "undefined") {
                 document.getElementById("files_panel").style.display = "block";

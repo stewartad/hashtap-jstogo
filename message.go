@@ -2,12 +2,12 @@ package main
 
 import (
 	"encoding/json"
-	"io/ioutil"
-	"os"
-	"os/user"
-	"path/filepath"
-	"sort"
-	"strconv"
+	// "io/ioutil"
+	// "os"
+	// "os/user"
+	// "path/filepath"
+	// "sort"
+	//"strconv"
 
 	"github.com/asticode/go-astichartjs"
 	"github.com/asticode/go-astilectron"
@@ -17,24 +17,25 @@ import (
 // handleMessages handles messages
 func handleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload interface{}, err error) {
 	switch m.Name {
-	case "explore":
-		// Unmarshal payload
-		var path string
-		if len(m.Payload) > 0 {
-			// Unmarshal payload
-			if err = json.Unmarshal(m.Payload, &path); err != nil {
-				payload = err.Error()
-				return
-			}
-		}
+	// case "explore":
+	// 	// Unmarshal payload
+	// 	var path string
+	// 	if len(m.Payload) > 0 {
+	// 		// Unmarshal payload
+	// 		if err = json.Unmarshal(m.Payload, &path); err != nil {
+	// 			payload = err.Error()
+	// 			return
+	// 		}
+	// 	}
 
-		// Explore
-		if payload, err = explore(path); err != nil {
-			payload = err.Error()
-			return
-		}
-	case "tapRelease":
+	// 	// Explore
+	// 	if payload, err = explore(path); err != nil {
+	// 		payload = err.Error()
+	// 		return
+	// 	}
+	case "tap":
 		// Unmarshall
+		//var time int64
 		var time int64
 		if len(m.Payload) > 0 {
 			if err = json.Unmarshal(m.Payload, &time); err != nil {
@@ -43,13 +44,16 @@ func handleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 			}
 		}
 
-		payload = calCost(time)
-
+		if payload, err = explore(time); err != nil {
+			payload = err.Error()
+			return
+		}
 		
 	}
 	return
 }
 
+// Cost gives all hedera values
 type Cost struct {
 	cost	float64	`json:"cost"`
 }
@@ -69,6 +73,8 @@ type Transaction struct {
 
 // Exploration represents the results of an exploration
 type Exploration struct {
+	Cost		float64				`json:"cost"`
+	Usd			float64				`json:"usd"`
 	Dirs       []Dir              `json:"dirs"`
 	Files      *astichartjs.Chart `json:"files,omitempty"`
 	FilesCount int                `json:"files_count"`
@@ -98,112 +104,29 @@ func calCost(time int64) (c Cost) {
 
 // explore explores a path.
 // If path is empty, it explores the user's home directory
-func explore(path string) (e Exploration, err error) {
-	// If no path is provided, use the user's home dir
-	if len(path) == 0 {
-		var u *user.User
-		if u, err = user.Current(); err != nil {
-			return
-		}
-		path = u.HomeDir
-	}
+func explore(time int64) (e Exploration, err error) {
 
-	// Read dir
-	var files []os.FileInfo
-	if files, err = ioutil.ReadDir(path); err != nil {
-		return
+	//init drink2
+	var soda = Drink{
+		name: "MtnDew",
+		price: 600000000,
+		flow: 1,
 	}
 
 
-
-	// init drink2
-	// var Beer = Drink{
-	// 	name: "Beer",
-	// 	price: 0.08,
-	// 	flow: 0.1,
-	// }
-
+	cost := (float64(time) / 1000) * soda.price
+	usd := cost * 0.1 / 1000000000
 	// Init exploration
 	e = Exploration{
-		Dirs: []Dir{},
-		Path: path,
+		Cost: cost,
+		Usd: usd,
+		//Dirs: []Dir{},
+		//Path: path,
 	}
 
-	// Add previous dir
-	if filepath.Dir(path) != path {
-		e.Dirs = append(e.Dirs, Dir{
-			Name: "..",
-			Path: filepath.Dir(path),
-		})
-	}
 
-	// Loop through files
-	var sizes []int
-	var sizesMap = make(map[int][]string)
-	var filesSize int64
-	for _, f := range files {
-		if f.IsDir() {
-			e.Dirs = append(e.Dirs, Dir{
-				Name: f.Name(),
-				Path: filepath.Join(path, f.Name()),
-			})
-		} else {
-			var s = int(f.Size())
-			sizes = append(sizes, s)
-			sizesMap[s] = append(sizesMap[s], f.Name())
-			e.FilesCount++
-			filesSize += f.Size()
-		}
-	}
 
-	// Prepare files size
-	if filesSize < 1e3 {
-		e.FilesSize = strconv.Itoa(int(filesSize)) + "b"
-	} else if filesSize < 1e6 {
-		e.FilesSize = strconv.FormatFloat(float64(filesSize)/float64(1024), 'f', 0, 64) + "kb"
-	} else if filesSize < 1e9 {
-		e.FilesSize = strconv.FormatFloat(float64(filesSize)/float64(1024*1024), 'f', 0, 64) + "Mb"
-	} else {
-		e.FilesSize = strconv.FormatFloat(float64(filesSize)/float64(1024*1024*1024), 'f', 0, 64) + "Gb"
-	}
 
-	// Prepare files chart
-	sort.Ints(sizes)
-	if len(sizes) > 0 {
-		e.Files = &astichartjs.Chart{
-			Data: &astichartjs.Data{Datasets: []astichartjs.Dataset{{
-				BackgroundColor: []string{
-					astichartjs.ChartBackgroundColorYellow,
-					astichartjs.ChartBackgroundColorGreen,
-					astichartjs.ChartBackgroundColorRed,
-					astichartjs.ChartBackgroundColorBlue,
-					astichartjs.ChartBackgroundColorPurple,
-				},
-				BorderColor: []string{
-					astichartjs.ChartBorderColorYellow,
-					astichartjs.ChartBorderColorGreen,
-					astichartjs.ChartBorderColorRed,
-					astichartjs.ChartBorderColorBlue,
-					astichartjs.ChartBorderColorPurple,
-				},
-			}}},
-			Type: astichartjs.ChartTypePie,
-		}
-		var sizeOther int
-		for i := len(sizes) - 1; i >= 0; i-- {
-			for _, l := range sizesMap[sizes[i]] {
-				if len(e.Files.Data.Labels) < 4 {
-					e.Files.Data.Datasets[0].Data = append(e.Files.Data.Datasets[0].Data, sizes[i])
-					e.Files.Data.Labels = append(e.Files.Data.Labels, l)
-				} else {
-					sizeOther += sizes[i]
-				}
-			}
-		}
-		if sizeOther > 0 {
-			e.Files.Data.Datasets[0].Data = append(e.Files.Data.Datasets[0].Data, sizeOther)
-			e.Files.Data.Labels = append(e.Files.Data.Labels, "other")
-		}
-	}
+
 	return
 }
