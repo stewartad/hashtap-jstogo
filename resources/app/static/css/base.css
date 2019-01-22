@@ -1,26 +1,12 @@
-/* * {
-    box-sizing:  border-box;
-} */
-
-/* html, body {
-    background-color: #fff;
-    color: #333;
-    height: 100%;
-    margin: 0;
-    width: 100%;
-} */
+/*
+** This is the style sheet for index.html it was mostly made by Aaron McCommon
+*/
 
 .panel {
   flex: 0 1 auto;
   font-family: 'Staatliches';
 }
 
-/*
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
-  @import url('https://fonts.googleapis.com/css?family=Staatliches');
-  @import url('https://fonts.googleapis.com/css?family=Permanent+Marker');
-  @import url('https://fonts.googleapis.com/css?family=Architects+Daughter');
-*/
   * {
     box-sizing: border-box;
     margin: 0;
@@ -39,7 +25,6 @@
     border: solid 6px black;
     border-radius: 15rem;
     padding: .4rem;
-    /*background: radial-gradient(at left top, rgb(255, 233, 207) 30%, rgba(255, 206, 13, 0.9) 100%); */
     background: radial-gradient(at left top, rgb(0, 0, 0) 30%, rgba(0, 20, 13, 0.9) 100%);
   }
 
@@ -163,10 +148,6 @@
         background-position: 0 170px;
       }
   }
-
-
-
-
 
   .doc button {
     flex: 0 1 auto;

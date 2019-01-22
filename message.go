@@ -49,9 +49,9 @@ type Cost struct {
 
 // Drink represents a liquid to be dispensed
 type Drink struct {
-	name	string	`json:"name"`
-	price	float64	`json:"price"`
-	flow	float64	`json:"flow"`
+	Name	string	`json:"name"`
+	Price	float64	`json:"price"`
+	Flow	float64	`json:"flow"`
 }
 
 
@@ -68,15 +68,15 @@ func explore(timeD int64) (e Exploration, err error) {
 
 	//init drink2
 	var soda = Drink{
-		name: "MtnDew",
-		price: 60000000,
-		flow: 1,
+		Name: "MtnDew",
+		Price: 60000000,
+		Flow: 1,
 	}
 	
 	
 
 	// cost is calculated by time multiplied by price since the flow is one floz/sec
-	cost := (float64(timeD) / 1000) * soda.price
+	cost := (float64(timeD) / 1000) * soda.Price
 
 	transferAmount(hedera.AccountID{Account: 1001}, hedera.AccountID{Account: 1002}, int64(cost))
 

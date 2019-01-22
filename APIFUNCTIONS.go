@@ -1,3 +1,7 @@
+/*
+**	This file contains all the functions used to communicate with the hedera hashgraph network
+*/
+
 package main
 
 import (
@@ -8,11 +12,11 @@ import (
 )
 
 const server string = "testnet.hedera.com:51009"
+
+//Kept the secret key in file because it's not linked to anything important and it made it easy to make the demo work
 const secret string = "302e020100300506032b657004220420d4d575f0a33cc860bcd205d1cb5efd2775614954fcc0fe484e81ba6117b0eeda"
 
-func calCost(secs float64, price float64) float64 {
-	return 6.66
-}
+//Makes a transaction between two accounts using Hbar
 //only use Account: 1001 for operator
 func transferAmount(operatorAccountID hedera.AccountID, targetAccountID hedera.AccountID, amount int64){
 	operatorSecret, err := hedera.SecretKeyFromString(secret)
@@ -72,6 +76,7 @@ func transferAmount(operatorAccountID hedera.AccountID, targetAccountID hedera.A
 
 }
 
+//Make an account on the hedera network 
 func makeAccount(){
 	operatorSecret, err := hedera.SecretKeyFromString(secret)
 	if err != nil{
@@ -111,7 +116,7 @@ func makeAccount(){
 }
 
 
-
+//This gets the account balance from the hedera network
 func getAccountBal(num hedera.AccountID) float64{
 	accountID := num
 	client, err := hedera.Dial(server)
@@ -140,9 +145,3 @@ func getAccountBal(num hedera.AccountID) float64{
 	return hbars
 }
 
-// func main(){
-// 	transferAmount(hedera.AccountID{Account: 1001}, hedera.AccountID{Account: 1002}, 100)
-// 	bal := getAccontBal(hedera.AccountID{Account: 1001})
-// 	bal2 := getAccontBal(hedera.AccountID{Account: 1002})
-// 	fmt.Printf("Balance1: %.5f\nBalance2: %.5f\n\n", bal,bal2)
-// }

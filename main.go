@@ -1,3 +1,13 @@
+/*
+**	Project Name:			HashTap
+**	Project Authors:		Ryan McCommon, Aaron McCommon, Austen Stewart
+**	Project Description:	HashTap was a proof of concept project made during Hack Arizona 2019.
+**							The challenge was to create a good use case for Hedera Hashgraph's cryptocurrency.
+**							Our idea was to create an application that simulated the use of a self serve
+**							soda machine that charged the costumer per Fl.Oz. using the cryptocurrency.
+**							This project was the winner of the challenge.
+ */
+
 package main
 
 import (
@@ -10,10 +20,6 @@ import (
 	astilog "github.com/asticode/go-astilog"
 	"github.com/pkg/errors"
 )
-
-// Constants
-const htmlAbout = `Welcome on <b>Astilectron</b> demo!<br>
-This is using the bootstrap and the bundler.`
 
 // Vars
 var (
@@ -40,28 +46,15 @@ func main() {
 			AppIconDefaultPath: "resources/icon.png",
 		},
 		Debug: *debug,
+
+		//Make the file menu displayed on the top bar
 		MenuOptions: []*astilectron.MenuItemOptions{{
 			Label: astilectron.PtrStr("File"),
+			//In the file menu put an option called price
 			SubMenu: []*astilectron.MenuItemOptions{
 				{
-					Label: astilectron.PtrStr("About"),
-					OnClick: func(e astilectron.Event) (deleteListener bool) {
-						if err := bootstrap.SendMessage(w, "about", htmlAbout, func(m *bootstrap.MessageIn) {
-							// Unmarshal payload
-							var s string
-							if err := json.Unmarshal(m.Payload, &s); err != nil {
-								astilog.Error(errors.Wrap(err, "unmarshaling payload failed"))
-								return
-							}
-							astilog.Infof("About modal has been displayed and payload is %s!", s)
-						}); err != nil {
-							astilog.Error(errors.Wrap(err, "sending about event failed"))
-						}
-						return
-					},
-				},
-				{
 					Label: astilectron.PtrStr("Price"),
+					//Price displays the price of soda per fl oz
 					OnClick: func(e astilectron.Event) (deleteListener bool) {
 						if err := bootstrap.SendMessage(w, "getPrice", price, func(m *bootstrap.MessageIn) {
 							var s string
@@ -79,18 +72,14 @@ func main() {
 				{Role: astilectron.MenuItemRoleClose},
 			},
 		}},
+		//This had an old function in it but now its used to store the price constant
 		OnWait: func(_ *astilectron.Astilectron, ws []*astilectron.Window, _ *astilectron.Menu, _ *astilectron.Tray, _ *astilectron.Menu) error {
 			w = ws[0]
-			price = 100
-			go func() {
-				//time.Sleep(5 * time.Second)
-				// if err := bootstrap.SendMessage(w, "check.out.menu", "Don't forget to check out the menu!"); err != nil {
-				// 	astilog.Error(errors.Wrap(err, "sending check.out.menu event failed"))
-				// }
-			}()
+			price = 60000000
 			return nil
 		},
 		RestoreAssets: RestoreAssets,
+		//This sets up the window that everything is displayed in
 		Windows: []*bootstrap.Window{{
 			Homepage:       "index.html",
 			MessageHandler: handleMessages,

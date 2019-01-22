@@ -1,34 +1,33 @@
+/* 
+**  All the Javascript functions are in this file.
+**  The most important ones are the ones that communicate with the go backend.
+*/
+
 let time = 0.0;
 let start, end;
 let index = {
-    about: function(html) {
-        let c = document.createElement("div");
-        c.innerHTML = html;
-        asticode.modaler.setContent(c);
-        asticode.modaler.show();
-    },
+    //Gets the price of soda that is coded in main.go
     getPrice: function(price) {
         let c = document.createElement("div");
-        c.innerHTML = "Current price for soda: " + price;
+        c.innerHTML = "Current price for soda: " + price + " Tinybars per second";
         asticode.modaler.setContent(c);
         asticode.modaler.show();
     },
-    addFolder(name, path) {
-        let div = document.createElement("div");
-        div.className = "dir";
-        div.onclick = function() { index.explore(path) };
-        div.innerHTML = `<i class="fa fa-folder"></i><span>` + name + `</span>`;
-        document.getElementById("dirs").appendChild(div)
-    },
+
+    //This function was supposed to get the account balances at load time but it doesn't work
     getBal: function() {
         let message = {"name": "onload"};
         astilectron.sendMessage(message, function(message) {
             document.getElementById("bal").innerHTML = `<h1>Customer Balance: ` + `   ` + message.payload.cbal + `</h1><br /><h1>Business Balance: ` + message.payload.bbal + `</h1>`;
         })
     },
+
+    //Makes a new date when the button was just pressed
     holdTap: function() {
         start = new Date();
     },
+
+    //calculates the time the button was held down and calls go functions to complete the transaction.
     releaseTap: function() {
         end = new Date();
         let time = end - start;
@@ -45,6 +44,8 @@ let index = {
         index.explore();
         
     },
+
+
     init: function() {
         // Init
         asticode.loader.init();
@@ -87,43 +88,16 @@ let index = {
                 return
             }
 
-            // Process path
-            document.getElementById("path").innerHTML = message.payload.path;
-
-            // Process dirs
-            document.getElementById("dirs").innerHTML = ""
-            for (let i = 0; i < message.payload.dirs.length; i++) {
-                index.addFolder(message.payload.dirs[i].name, message.payload.dirs[i].path);
-            }
-
-            // Process files
-            document.getElementById("files_count").innerHTML = message.payload.files_count;
-            //document.getElementById("files_size").innerHTML = message.payload.files_size;
+            // Process costs
             document.getElementById("cost").innerHTML = `<h1>WTF</h1>` + message.payload;
-            document.getElementById("files").innerHTML = ""; 
-            if (typeof message.payload.files !== "undefined") {
-                document.getElementById("files_panel").style.display = "block";
-                let canvas = document.createElement("canvas");
-                document.getElementById("files").append(canvas);
-                new Chart(canvas, message.payload.files);
-            } else {
-                document.getElementById("files_panel").style.display = "none";
-            }
         })
     },
     listen: function() {
         astilectron.onMessage(function(message) {
             switch (message.name) {
-                case "about":
-                    index.about(message.payload);
-                    return {payload: "payload"};
-                    break;
                 case "getPrice":
                     index.getPrice(message.payload);
                     return {payload: "payload"};
-                    break;
-                case "check.out.menu":
-                    asticode.notifier.info(message.payload);
                     break;
             }
         });
